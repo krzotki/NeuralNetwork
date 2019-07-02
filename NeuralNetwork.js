@@ -60,7 +60,7 @@ class NeuralNetwork
 		let tWeightsToOutput = Matrix.transpose(this.weightsToOutput);
 		let hiddenErrors = Matrix.multiply(tWeightsToOutput,output_errors);
 
-		//adjust the weights going to outputs
+		////adjust the weights which are heading to the outputs layer
 		let gradients = Matrix.map(outputNodes,dsigmoid);
 		
 		//not a product of two matrices but just element-wise multiplication (hadamard product) the other multiplication is weighted sum
