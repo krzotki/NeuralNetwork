@@ -94,10 +94,10 @@ class NeuralNetwork
 		
 	}
 	 mutate(func) {
-	    this.weights_ih.map(func);
-	    this.weights_ho.map(func);
-	    this.bias_h.map(func);
-	    this.bias_o.map(func);
+	    this.weightsToHidden.map(func);
+	    this.weightsToOutput.map(func);
+	    this.biasToHidden.map(func);
+	    this.biasToOutput.map(func);
  	}
 	
 }	
