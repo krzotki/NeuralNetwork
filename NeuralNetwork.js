@@ -93,4 +93,11 @@ class NeuralNetwork
 		this.biasToHidden = Matrix.add(this.biasToHidden,hiddenGradients);
 		
 	}
+	 mutate(func) {
+	    this.weights_ih.map(func);
+	    this.weights_ho.map(func);
+	    this.bias_h.map(func);
+	    this.bias_o.map(func);
+ 	}
+	
 }	
