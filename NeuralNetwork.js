@@ -72,6 +72,7 @@ class NeuralNetwork
 	
 	train(inputs,answer)
 	{
+		//guess and get the output errors
 		let inputMatrix = Matrix.fromArray(inputs);
 		let hiddenNodes = Matrix.multiply(this.weightsToHidden,inputMatrix);
 		hiddenNodes = Matrix.add(hiddenNodes,this.biasToHidden);
@@ -101,6 +102,8 @@ class NeuralNetwork
 		let answers = Matrix.fromArray(answer);
 		let output_errors = Matrix.subtract(answers,guesses);
 		
+		
+		//back propagation for a single hidden layer network
 		if(this.hiddenLayers_num==1)
 		{
 			let tWeightsToOutput = Matrix.transpose(this.weightsToOutput);
@@ -138,7 +141,7 @@ class NeuralNetwork
 			this.biasToHidden = Matrix.add(this.biasToHidden,hiddenGradients);
 		}
 		
-		
+		//back propagation for a multi hidden layer network
 		if(this.hiddenLayers_num>1)
 		{
 			
