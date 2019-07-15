@@ -38,6 +38,59 @@ class NeuralNetwork
 		
 	}
 	
+	copy()
+	{
+		
+		var temp =new NeuralNetwork(this.input_num,this.hidden_num,this.output_num,this.hiddenLayers_num);
+		for(var i in this.weightsToHidden.matrix)
+		{
+			for(var g in this.weightsToHidden.matrix[i])
+			{
+				temp.weightsToHidden.matrix[i][g] = this.weightsToHidden.matrix[i][g];
+			}
+		}
+		for(var i in this.weightsToOutput.matrix)
+		{
+			for(var g in this.weightsToOutput.matrix[i])
+			{
+				temp.weightsToOutput.matrix[i][g] = this.weightsToOutput.matrix[i][g];
+			}
+		}
+		for(var i in this.biasToHidden.matrix)
+		{
+			for(var g in this.biasToHidden.matrix[i])
+			{
+				temp.biasToHidden.matrix[i][g] = this.biasToHidden.matrix[i][g];
+			}
+		}
+		for(var i in this.biasToOutput.matrix)
+		{
+			for(var g in this.biasToOutput.matrix[i])
+			{
+				temp.biasToOutput.matrix[i][g] = this.biasToOutput.matrix[i][g];
+			}
+		}
+		for(var h in this.AdditionalHiddenLayers)
+		{
+			var layer = this.AdditionalHiddenLayers[h];
+			for(var i in layer.weights.matrix)
+			{
+				for(var g in layer.weights.matrix[i])
+				{
+					temp.AdditionalHiddenLayers[h].weights.matrix[i][g] = layer.weights.matrix[i][g];
+				}
+			}
+			for(var i in layer.biases.matrix)
+			{
+				for(var g in layer.biases.matrix[i])
+				{
+					temp.AdditionalHiddenLayers[h].biases.matrix[i][g] = layer.biases.matrix[i][g];
+				}
+			}	
+		}
+		return temp;
+	}
+	
 	guess(inputs)
 	{
 		let inputMatrix = Matrix.fromArray(inputs);
@@ -72,7 +125,6 @@ class NeuralNetwork
 	
 	train(inputs,answer)
 	{
-		//guess and get the output errors
 		let inputMatrix = Matrix.fromArray(inputs);
 		let hiddenNodes = Matrix.multiply(this.weightsToHidden,inputMatrix);
 		hiddenNodes = Matrix.add(hiddenNodes,this.biasToHidden);
@@ -102,8 +154,6 @@ class NeuralNetwork
 		let answers = Matrix.fromArray(answer);
 		let output_errors = Matrix.subtract(answers,guesses);
 		
-		
-		//back propagation for a single hidden layer network
 		if(this.hiddenLayers_num==1)
 		{
 			let tWeightsToOutput = Matrix.transpose(this.weightsToOutput);
@@ -141,7 +191,7 @@ class NeuralNetwork
 			this.biasToHidden = Matrix.add(this.biasToHidden,hiddenGradients);
 		}
 		
-		//back propagation for a multi hidden layer network
+		
 		if(this.hiddenLayers_num>1)
 		{
 			
@@ -237,7 +287,6 @@ class NeuralNetwork
 			this.AdditionalHiddenLayers[i].biases = Matrix.map(this.AdditionalHiddenLayers[i].biases,func);
 			
 		}
-		
  	}
 }	
 
